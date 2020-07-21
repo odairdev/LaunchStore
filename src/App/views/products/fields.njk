@@ -7,7 +7,7 @@
                 {% if product.category_id == category.id %}
                     selected
                 {% endif %}>
-                    {{category.name}}}
+                    {{category.name}}
                 </option>
             {% endfor %}
         </select>
@@ -15,7 +15,7 @@
 </div>
 
 <div class="item">
-    <div>Nome</div>
+    <div>Título do Anúncio</div>
     <div>
         <input type="text" 
         name="name"
@@ -27,9 +27,7 @@
 <div class="item">
     <div>Descrição</div>
     <div>
-        <textarea name="description">
-            {{product.description}}
-        </textarea>
+        <textarea name="description">{{product.description}}</textarea>
     </div>
 </div>
 
@@ -39,8 +37,8 @@
         <input type="text" 
         name="price"
         placeholder="Valor do Produto"
-        value="{{product.price}}">
-        {# Mascara Monetária#}
+        value="{{product.price}}"
+        onkeydown="Mask.Apply(this, 'formatBRL')">
     </div>
     {% if product.old_price %}
         <input type="hidden" name="old_price" value="{{product.old_price}}">
