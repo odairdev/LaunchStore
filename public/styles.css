@@ -2,7 +2,7 @@
 
 :root{
     --primary-color--: #fd951f;
-    --secondary-color--: #1f65fd;
+    --secondary-color--: #1fbefd;
 }
 
 * { 
@@ -47,6 +47,14 @@ body {
     cursor: pointer;
 
     transition: all 0.2s ease-out;
+}
+
+.button.edit {
+    background-color: var(--secondary-color--);
+}
+
+.button.delete {
+    background-color: lightcoral;
 }
 
 .button:hover {
@@ -139,6 +147,10 @@ section.form .header h3 {
     margin-bottom: 16px;
 }
 
+.form .fields {
+    margin-bottom: 32px;
+}
+
 .form .item {
     margin-bottom: 16px;
 }
@@ -183,6 +195,21 @@ section.form .header h3 {
     min-height: 150px;
 }
 
-.form .fields {
-    margin-bottom: 64px;
+input[type="radio"] {
+    margin-right: 2px;
+    vertical-align: top;
+}
+
+form .item .span-radio {
+    padding: 8px 16px;
+    background-color: var(--primary-color--);
+    border-radius: 16px;
+    color: white;
+    margin-right: 4px;
+    margin-top: 8px;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    
 }

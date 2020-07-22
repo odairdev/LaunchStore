@@ -1,4 +1,4 @@
-const { hasBlankFields } = require('../../lib/utils')
+const { hasBlankFields, formatPrice } = require('../../lib/utils')
 const Category = require('../models/Category')
 const Product = require('../models/Product')
 
@@ -14,16 +14,52 @@ module.exports = {
             })
     },
 
-    async post(req, res) {
+    async edit(req, res) {
+        let results = await Product.find(req.params.id)
+        const product = results.rows[0]
 
-        if (hasBlankFields(req.body)) return res.send('Please fill out all fields.')
+        if(!product) {res.send('Product not Found.')}
 
-        let results = await Product.create(req.body)
-        const productId = results.rows[0].id
+        product.old_price = formatPrice(product.old_price)
+        product.price = formatPrice(product.price)
 
         results = await Category.all()
         const categories = results.rows
 
-        return res.render('products/create', {productId, categories})
+        return res.render(`products/edit`, {product, categories})
+    },
+
+    async post(req, res) {
+
+        if (hasBlankFields(req.body)) return res.send('Please fill out all fields.')
+
+        req.body.price = req.body.price.replace(/\D/g, "")
+
+        let results = await Product.create(req.body)
+        const productId = results.rows[0].id
+
+        return res.redirect(`/products/${productId}/edit`)
+    },
+
+    async put(req, res) {
+        if (hasBlankFields(req.body)) return res.send('Please Fill out all fields.')
+
+        req.body.price = req.body.price.replace(/\D/g, "")
+
+        if (req.body.old_price != req.body.price) {
+            const oldProduct = await Product.find(req.body.id)
+
+            req.body.old_price = oldProduct.rows[0].price
+        }
+
+        await Product.update(req.body)
+
+        return res.redirect(`/products/${req.body.id}/edit`)
+    },
+
+    async delete(req, res) {
+        await Product.delete(req.body.id)
+
+        return res.redirect(`/`)
     }
 }
