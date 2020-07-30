@@ -5,11 +5,11 @@ const Product = require('../models/Product')
 module.exports = {
     create(req, res) {
         Category.all()
-            .then((results) => {
+            .then(results => {
                 const categories = results.rows
 
                 return res.render('products/create', {categories})
-            }).catch((err) => {
+            }).catch( err => {
                 throw new Error(err)
             })
     },
